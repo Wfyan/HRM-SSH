@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.organization.O">
+	<class name="Position" table="position">
+		<id name="posiId" column="positionId" type="string">
+			<generator class="assigned"/>
+		</id>
+		
+		<property name="positionName" column="positionname" type="string"></property>
+		<many-to-one name="thirdO" column="organizeId" class="cn.organization.O.ThirdOrganization" lazy="false"/>
+		<many-to-one name="cat" column="kindId" class="cn.organization.O.Category" lazy="false"/>
+	<set name="ratio" lazy="false" inverse="true">
+        <key column="positionId" />
+        <one-to-many  class="cn.payPosition.O.PayRatio" />
+  	</set>
+	</class>
+</hibernate-mapping>

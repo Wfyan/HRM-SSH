@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.people.O">
+	<class name="RolePower" table="role_of_powerview">
+		<id name="id" column="id" type="int">
+			<generator class="native"/><!-- 主键生成策略（identity，sequence，assigned） -->
+		</id>
+		
+		<property name="powerId" column="powerId" type="int"></property>
+		<property name="powername" column="powername" type="string"></property>
+		<property name="ahref" column="ahref" type="string"></property>
+		<many-to-one name="user" column="roleId" class="cn.people.O.User"  lazy="false"/>
+
+		<!-- 原因是:Hibernate3以后的版本，默认的lazy属性就是true，如果再次设置lazy="true"就会发生该异常，去掉问题解决. -->
+	</class>
+</hibernate-mapping>

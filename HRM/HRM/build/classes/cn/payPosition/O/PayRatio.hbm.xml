@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.payPosition.O">
+	<class name="PayRatio" table="payratio">
+		<id name="id" column="id" type="int">
+			<generator class="native"/>
+		</id>
+		
+		<property name="value" column="value" type="string"></property>
+		<property name="assigner" column="assigner" type="string"></property>
+		<property name="registDate" column="registDate" type="date"></property>
+		
+		<many-to-one name="pos" column="positionId" class="cn.organization.O.Position" not-null="true" />
+    	<many-to-one name="pItem" column="itemId" class="cn.payPosition.O.PayItem" not-null="true" />
+	</class>
+</hibernate-mapping>

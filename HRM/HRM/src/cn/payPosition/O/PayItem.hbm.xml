@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.payPosition.O">
+	<class name="PayItem" table="payitem">
+		<id name="itemId" column="itemId" type="int">
+			<generator class="native"/>
+		</id>
+		
+		<property name="item" column="item" type="string"></property>
+	<set name="ratio" lazy="false" inverse="true" >
+        <key column="itemId" />
+        <one-to-many  class="cn.payPosition.O.PayRatio" />
+  	</set>
+	</class>
+</hibernate-mapping>

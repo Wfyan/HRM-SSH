@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation"
+		value="false" /><!-- 是否允许动态调用 -->
+	<constant name="struts.devMode" value="false" />
+	<include file="struts-default.xml" />
+		
+	<package name="cn" extends="struts-default">
+		<interceptors>
+			<interceptor name="MyInterceptor" class="cn.interceptor.MyInterceptor" />
+		</interceptors>
+		<default-interceptor-ref name="defaultStack"/>
+				<!--全局结果处理  -->
+		<global-results>
+			<result name="input">input.jsp</result>
+		</global-results>
+
+<!-- 权限管理 -->
+		<action name="showPower" class="cn.people.action.ShowPowerAction">
+			<result name="success" type="redirect">index.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+<!-- 登录管理 -->
+		<action name="login" class="cn.people.action.LoginAction">
+			<result name="success">index.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+<!-- 上传管理 -->
+    	<action name="upload" class="cn.people.action.UpLoadAction">
+    		<param name="savePath">/upload</param>  <!-- 部署本工程前，要在WebRoot下手工创建文件夹uploadAdd,保存的文件 -->
+    		<result name="success">success.jsp</result>
+    		<result name="input">input.jsp</result>
+    		<interceptor-ref name="defaultStack"/>    		
+    		<interceptor-ref name="fileUpload">
+    			<param name="allowedTypes">image/gif,image/jpeg,image/x-png,image/bmp,text/plain</param>   <!-- 允许上传的文件类型 -->
+   				<param name="maximumSize">2048000</param>   <!-- 限制上传文件大小为2048000字节  --> 
+    		</interceptor-ref>
+		</action>
+<!-- 人事管理 -->
+	<!-- 添加 -->
+		<action name="addPeople" class="cn.people.action.AddPeopleAction">
+			<result name="success">success.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 更新/恢复 -->
+		<action name="updatePeople_*" class="cn.people.action.UpdatePeopleAction" method="{1}">
+			<result name="success">success.jsp</result>
+			<result name="recover">success.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 删除 -->
+		<action name="deletePeople" class="cn.people.action.DeletePeopleAction">
+			<result name="success">success.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 显示人员信息具体页面 -->
+		<action name="toPeopleInfo_*" class="cn.people.action.ShowPeopleAction" method="{1}">
+			<result name="success">peopleInfo.jsp</result>
+			<result name="update">updatePeople.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 查找一级机构 -->
+		<action name="showFirstO" class="cn.organization.action.ShowFirstOrganization">
+			<result name="success">showOrganization.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 查找二级机构 -->
+		<action name="showSecondO_*" class="cn.organization.action.ShowSecondOrganization" method="{1}">
+			<result name="success">showOrganization.jsp</result>
+			<result name="all">showOrganization.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 查找三级机构 -->
+		<action name="showThirdO_*" class="cn.organization.action.ShowThirdOrganization" method="{1}">
+			<result name="success">showOrganization.jsp</result>
+			<result name="all">showOrganization.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 通过查询条件显示人员信息 -->
+		<action name="searchPeople_*" class="cn.people.action.SearchPeopleAction" method="{1}">
+			<result name="success">showPeople.jsp</result>
+			<result name="check">checkPeople.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+<!-- 薪酬管理 -->
+	<!-- 添加薪酬项目 -->
+		<action name="addItem" class="cn.pay.action.AddItemAction">
+			<result name="success" type="redirect">showItem.action</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 显示薪酬项目,以列表的形式显示 -->
+		<action name="showItem" class="cn.pay.action.ShowPayItemAction">
+			<result name="success">/sa/showPayItem.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 显示要添加的薪酬项目,以options显示 -->
+		<action name="toSetPay" class="cn.pay.action.ToSetPayAction">
+			<result name="success">/sa/setPay.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 显示要添加的薪酬标准 -->
+		<action name="showStandard" class="cn.pay.action.ShowStandardAction">
+			<result name="success">/sa/showPayStandardOptions.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 显示要添加的薪酬标准 -->
+		<action name="showPayRatio" class="cn.pay.action.ShowPayRatioAction">
+			<result name="success">/sa/showPayRatio.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 添加薪酬项目 -->
+		<action name="addPayRatio" class="cn.pay.action.AddPayRatioAction">
+			<result name="success">success.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 添加职业分类 -->
+		<action name="addCategory" class="cn.organization.action.AddCategoryAction">
+			<result name="success" type="redirect">showCategory_list.action</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 显示职业分类 -->
+		<action name="showCategory_*" class="cn.organization.action.ShowCategoryAction" method="{1}">
+			<result name="list">/sa/showCategory.jsp</result>
+			<result name="options">/sa/showCategoryOptions.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 添加职业-->
+		<action name="addPosition" class="cn.organization.action.AddPositionAction">
+			<result name="success" type="redirect">showCategory.action</result>
+			<result name="input">input.jsp</result>
+		</action>
+	<!-- 显示职业 -->
+		<action name="showPosition_*" class="cn.organization.action.ShowPositionAction" method="{1}">
+			<result name="list">/sa/showPosition.jsp</result>
+			<result name="options">/sa/showPositionOptions.jsp</result>
+			<result name="input">input.jsp</result>
+		</action>
+	</package>
+</struts>

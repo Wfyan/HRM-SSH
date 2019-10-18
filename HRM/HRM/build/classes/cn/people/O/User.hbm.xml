@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.people.O">
+	<class name="User" table="user">
+		<id name="id" column="id" type="int">
+			<generator class="assigned"/><!-- 主键生成策略（identity，sequence，assigned） -->
+		</id>
+		
+		<property name="username" column="username" type="string"></property>
+		<property name="password" column="password" type="string"></property>
+		<property name="roleId" column="roleId" type="int"></property>
+		<!-- 原因是:Hibernate3以后的版本，默认的lazy属性就是true，如果再次设置lazy="true"就会发生该异常，去掉问题解决. -->
+	</class>
+</hibernate-mapping>

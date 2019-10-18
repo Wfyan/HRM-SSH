@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.organization.O">
+	<class name="FirstOrganization" table="orgnizationi">
+		<id name="oId" column="orIdI" type="string">
+			<generator class="assigned"/><!-- 主键生成策略（identity，sequence，assigned） -->
+		</id>
+		
+		<property name="manager" column="manager" type="string"></property>
+		<property name="organizename" column="organizename" type="string"></property>
+	</class>
+</hibernate-mapping>
